@@ -1,3 +1,3 @@
-model = LinearRegression()
-model.fit(xTrain, yTrain)
-print('Model trained')
+yTrain) > best):
+#     best = model.score(xTrain, yTrain)
+#     print(best, float(i))

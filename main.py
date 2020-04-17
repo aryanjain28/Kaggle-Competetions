@@ -1,6 +1,7 @@
 import sklearn
 from sklearn.linear_model import LinearRegression
-from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.svm import SVR
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -14,18 +15,26 @@ yTrain = xTrain['SalePrice']
 xTrain = xTrain[FEATURES]
 xTrain = pd.get_dummies(xTrain)
 
+#   0.9794138105186126 1        --random state
+
 # model
-model = LinearRegression()
+best = 0
+# for i in range(1, 10):
+model = RandomForestRegressor(max_depth=18, random_state=1, n_estimators=83, ccp_alpha=8.0, )
 model.fit(xTrain, yTrain)
-print('Model trained')
+# if (best < model.score(xTrain, yTrain)):
+best = model.score(xTrain, yTrain)
+print(best)
+
+
 
 xTest = pd.read_csv('/home/aryan/Desktop/Kaggle/Housing Price Prediction/test.csv')
 xTest = xTest[FEATURES]
 xTest = pd.get_dummies(xTest)
 
 predictions = model.predict(xTest)
-print(model.score(xTrain, yTrain))
 
 r = pd.DataFrame(predictions)
 r.index+=1461
-r.to_csv('/home/aryan/Desktop/Kaggle/Housing Price Prediction/myCSV1.csv', index_label=['Id','SalePrice'])
+r.to_csv('/home/aryan/Desktop/Kaggle/Housing Price Prediction/myCSV2.csv', index_label=['Id','SalePrice'])
+
